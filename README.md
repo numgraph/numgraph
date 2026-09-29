@@ -104,6 +104,8 @@ torch::Tensor aggregate_neighbors_cpu(
 <br>
 
 ## 10. Roadmap[x] Core C++ architecture and project conceptualization.[x] Pybind11 bindings and basic setup script configuration.[ ] Full CUDA/GPU kernel acceleration support.[ ] Dynamic graph rewiring primitives based on latent space distances.[ ] Distributed multi-node graph partitioning utilities.🤝 11. ContributingWe welcome contributions from the community! Whether it is optimizing C++ routines, adding new graph operators, or improving documentation:Fork the repository.Create your feature branch (git checkout -b feature/AmazingFeature).Commit your changes (git commit -m 'Add some AmazingFeature').Push to the branch (git push origin feature/AmazingFeature).Open a Pull Request.Please read our CONTRIBUTING.md for details on code style and testing guidelines. <p>
+
+<br>
     
 ##🤝 11. Contributing
 We welcome contributions from the community! Whether it is optimizing C++ routines, adding new graph operators, or improving documentation:
