@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="Capture2.png" alt="numgraph logo" width="350"/>
+  <img src="Capture2.PNG" alt="numgraph logo" width="350"/>
 
   <h1>numgraph</h1>
   <p><b>Numerical Core for Learnable Graphs</b></p>
