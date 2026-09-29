@@ -44,8 +44,7 @@ The system is split into two primary layers:
 1. **The C++ Engine (`csrc/`)**: Manages raw memory buffers, multi-threaded CPU kernels (via OpenMP), and sparse graph layout transformations.
 2. **The Python Frontend (`numgraph/`)**: Exposes idiomatic PyTorch module wrappers (`nn.Module`), autograd functions (`torch.autograd.Function`), and high-level utility pipelines.
 
-+-------------------------------------------------------+|                   Python Frontend                     ||        (numgraph.nn.GraphConv, numgraph.utils)        |+---------------------------+---------------------------+| Pybind11 Zero-Copy Tensors+---------------------------v---------------------------+|                     C++ Core Engine                   ||   (Sparse Matrix Operations, Neighborhood Aggregators)  |+-------------------------------------------------------+
----
+
 
 ## 📦 3. Installation & Setup
 
