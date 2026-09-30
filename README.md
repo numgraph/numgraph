@@ -102,18 +102,14 @@ torch::Tensor aggregate_neighbors_cpu(
 ## 6. Python Bindings & PyTorch Integration
 Python bindings are exposed via pybind11. Tensors are passed seamlessly without unnecessary host-to-device memory copies when executing on matching hardware contexts.Autograd Integration: Every C++ forward kernel provides a corresponding backward gradient formulation registered inside PyTorch’s dispatcher.Device Agnosticism: Core routines are designed to hook seamlessly into CPU thread pools and future CUDA stream executors.
 
-## 7. API Referencenumgraph.nn.LearnableGraphConvParameters:in_features (int): Size of each input sample.out_features (int): Size of each output sample.bias (bool, optional): If set to False, the layer will not learn an additive bias. Default: True.Forward Arguments:x (Tensor): Input node feature matrix of shape $(N, \text{in\_features})$.edge_index (LongTensor): Graph connectivity of shape $(2, E)$.edge_weight (Tensor, optional): Scalar weight for each edge of shape $(E,)$
 
-## 8. Benchmarks & Performance MetricsFramework / CoreGraph Size (Nodes)Graph Size (Edges)Forward Pass LatencyBackward Pass LatencyMemory Footprintnumgraph (C++ Core)1,000,00010,000,0004.2 ms7.8 ms140 MBBaseline Python Loop1,000,00010,000,000142.0 ms310.5 ms890 MBnumgraph (C++ Core)100,0001,000,0000.45 ms0.82 ms15 MBBaseline Python Loop100,0001,000,00012.4 ms28.1 ms95 MB🧪 9. Running TestsTo run the complete test suite including C++ unit validation and Python end-to-end gradient checks, use pytest:Bashpytest tests/ -v
 
-<br>
-
-## 10. Roadmap
+## 7 Roadmap
 [x] Core C++ architecture and project conceptualization.[x] Pybind11 bindings and basic setup script configuration.[ ] Full CUDA/GPU kernel acceleration support.[ ] Dynamic graph rewiring primitives based on latent space distances.[ ] Distributed multi-node graph partitioning utilities.
 
 <br>
     
-## 11. Contributing
+## 8. Contributing
 We welcome contributions from the community! Whether it is optimizing C++ routines, adding new graph operators, or improving documentation:
 
 Fork the repository.
