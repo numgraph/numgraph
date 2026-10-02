@@ -27,9 +27,9 @@
 
 numgraph is a high-performance numerical computing library designed specifically for graph-structured data where nodes, edges, and topologies are fully learnable during training loops.Traditional graph neural network frameworks rely on static, human-annotated graph structures that introduce heavy memory overhead and indexing bottlenecks. numgraph solves this by introducing LGraph—a dynamic graph engine powered by a tightly optimized C++17 core with zero-copy Pybind11 bindings for modern tensor runtimes like PyTorch.
 
-##1. Project Overview & Core PhilosophyIn real-world applications (fraud detection, recommendation systems, molecular modeling, and financial flows), physical graph connections are often missing, noisy, or intentionally manipulated. numgraph shifts the paradigm from static message passing to learnable topological evolution.Key ObjectivesLearnable Topology Support: Learn task-optimal network topologies on the fly directly from raw features or unstructured data using low-rank structural decomposition ($E_1 \cdot E_2^T$).Blazing Fast Execution: Bypass Python interpreter overhead for intensive neighborhood aggregation and node-state updates using parallel C++ kernels.Memory-Efficient Sparsification: Control neighborhood density and memory footprints using dynamic $O(N \cdot k)$ top_k sparse filters.Modular Extensibility: Clear isolation of memory layouts, sparse graph storage formats (CSR/CSC), and custom compute kernels.
+1. Project Overview & Core PhilosophyIn real-world applications (fraud detection, recommendation systems, molecular modeling, and financial flows), physical graph connections are often missing, noisy, or intentionally manipulated. numgraph shifts the paradigm from static message passing to learnable topological evolution.Key ObjectivesLearnable Topology Support: Learn task-optimal network topologies on the fly directly from raw features or unstructured data using low-rank structural decomposition ($E_1 \cdot E_2^T$).Blazing Fast Execution: Bypass Python interpreter overhead for intensive neighborhood aggregation and node-state updates using parallel C++ kernels.Memory-Efficient Sparsification: Control neighborhood density and memory footprints using dynamic $O(N \cdot k)$ top_k sparse filters.Modular Extensibility: Clear isolation of memory layouts, sparse graph storage formats (CSR/CSC), and custom compute kernels.
 
-##2. Core ArchitectureThe system is split into two primary layers:┌────────────────────────────────────────────────────────┐
+2. Core ArchitectureThe system is split into two primary layers:┌────────────────────────────────────────────────────────┐
 │                   Python Frontend                      │
 │   • numgraph.LGraph (nn.Module Wrapper)                │
 │   • PyTorch Autograd Engine Integration                │
@@ -43,7 +43,7 @@ numgraph is a high-performance numerical computing library designed specifically
 └────────────────────────────────────────────────────────┘
 The C++ Engine (csrc/): Manages raw memory buffers, multi-threaded CPU kernels (via OpenMP), low-rank topology calculations, and sparse graph layout transformations.The Python Frontend (numgraph/): Exposes idiomatic PyTorch module wrappers (nn.Module), autograd functions (torch.autograd.Function), and scalable model assembly blocks.
 
-##3. Why LGraph? Core Qualities & CapabilitiesThe flagship operator in numgraph is LGraph (Learnable Graph). Unlike traditional GNN layers that require an explicit edge_index input, LGraph decouples your model from rigid database connections.[N Nodes]
+3. Why LGraph? Core Qualities & CapabilitiesThe flagship operator in numgraph is LGraph (Learnable Graph). Unlike traditional GNN layers that require an explicit edge_index input, LGraph decouples your model from rigid database connections.[N Nodes]
    │
    ├─► E1 (N x embed_dim) ──┐
    │                        ├──► Outer Product (E1 • E2ᵀ) ──► Low-Rank Scores (N x N)
@@ -58,7 +58,7 @@ The C++ Engine (csrc/): Manages raw memory buffers, multi-threaded CPU kernels (
                                                             Message Passing Output
 Key Qualities of LGraph:No-Graph-Required Interface: Accepts raw feature matrices $\mathbf{X} \in \mathbb{R}^{N \times F}$ directly. It synthesizes an interaction graph from scratch for unstructured tabular data, point clouds, or multi-modal vectors.Low-Rank Topology Memory Scaling: Computes global pairwise similarities using factorized parameters $E_1, E_2 \in \mathbb{R}^{N \times d}$. This reduces structural parameter memory from quadratic $O(N^2)$ to linear $O(N \cdot d)$, allowing numgraph to scale to massive node counts ($N$).Dynamic top_k Noise Pruning: Automatically prunes weak, noisy, or deceptive connections, retaining only the top $k$ strongest incoming connections per node.Oversmoothing Prevention: Features built-in residual connections, pre-layer normalization, and multi-head attention to allow deep stacking without feature collapse or gradient degradation
 
-##4. Installation & SetupPrerequisites
+4. Installation & SetupPrerequisites
 A modern C++17 compliant compiler (g++ >= 9.0, clang >= 10, or MSVC).Python 3.8 or higher.PyTorch (version 2.0.0 or greater).Source InstallationClone the repository and install it in editable mode:Bashgit 
 ```bash
 clone https://github.com/numgraph/numgraph.git
@@ -67,7 +67,7 @@ pip install -e . --verbose
 ```
 
 
-##5. Quick Start GuideHere is how to initialize an LGraph layer and execute a forward/backward pass within a standard PyTorch training loop:Pythonimport torch
+5. Quick Start GuideHere is how to initialize an LGraph layer and execute a forward/backward pass within a standard PyTorch training loop:Pythonimport torch
 import numgraph as ng
 
 ```python
@@ -151,11 +151,11 @@ torch::Tensor aggregate_topk_cpu(
     return output;
 }
 ```
-##7. Python Bindings & PyTorch Integration
+7. Python Bindings & PyTorch Integration
 Zero-Copy Memory Overhead: Native PyTorch tensors pass directly into C++ pointer addresses using pybind11::array_t and Torch C++ API wrappers.Autograd Registration: Forward computation passes through torch.autograd.Function, enabling seamless gradient calculation back to $E_1, E_2$, weights, and biases.Device Agnosticism: Core execution layers automatically dispatch workloads to CPU thread pools via OpenMP or stream executors on matching hardware targets.
 
-##8. Development Roadmap
+8. Development Roadmap
 [x] Core C++ architecture and project setup.[x] Pybind11 bindings and basic setup script configuration.[x] Native LGraph low-rank structural topology layer ($E_1 \cdot E_2^T$).[x] Multi-head top-k sparse aggregation routines.[ ] Custom CUDA/GPU fused kernels for top_k gathering in csrc/.[ ] Dynamic batching offsets for multi-graph batch processing.[ ] Distributed multi-node graph partitioning utilities.
 
-##9. Contributing
+9. Contributing
 We welcome contributions! Whether optimizing C++ routines, refining LGraph topology operations, or expanding documentation:Fork the repository.Create your feature branch (git checkout -b feature/AmazingFeature).Commit your changes (git commit -m 'Add some AmazingFeature').Push to the branch (git push origin feature/AmazingFeature).Open a Pull Request.Please review CONTRIBUTING.md for code style and test suite guidelines.
