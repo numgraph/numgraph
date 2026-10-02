@@ -71,7 +71,7 @@ edge_index = torch.randint(0, 100, (2, 250))
 edge_weights = torch.ones(250, requires_grad=True)
 
 # Initialize a learnable numgraph operator layer
-layer = numgraph.nn.LearnableGraphConv(in_features=64, out_features=32)
+layer = numgraph.nn.LGraphConv(in_features=64, out_features=32)
 
 # Forward pass
 output = layer(node_features, edge_index, edge_weights)
